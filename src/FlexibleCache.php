@@ -45,11 +45,10 @@ class FlexibleCache
      *
      * @param  string  $key  The cache key
      * @param  array{0: DateTimeInterface|DateInterval|int, 1: DateTimeInterface|DateInterval|int}  $ttl
-     *         First value: seconds the cache is considered "fresh"
-     *         Second value: seconds the cache can be served as "stale" before hard expiration
+     *                                                                                                    First value: seconds the cache is considered "fresh"
+     *                                                                                                    Second value: seconds the cache can be served as "stale" before hard expiration
      * @param  callable(): TCacheValue  $callback  The callback to generate the cached value
      * @param  array{seconds?: int, owner?: string}|null  $lock  Optional lock configuration
-     *
      * @return TCacheValue
      */
     public function flexible(string $key, array $ttl, callable $callback, ?array $lock = null): mixed
@@ -86,7 +85,7 @@ class FlexibleCache
 
         // Value is stale. Return it but schedule refresh in terminating callback only once (see $this->scheduled)
         // Use object ID to differentiate between cache stores
-        $scheduledKey = "illuminate:cache:flexible:".spl_object_id($cache).":".$key;
+        $scheduledKey = 'illuminate:cache:flexible:'.spl_object_id($cache).':'.$key;
 
         if (! isset($this->scheduled[$scheduledKey])) {
             $this->scheduled[$scheduledKey] = true;
